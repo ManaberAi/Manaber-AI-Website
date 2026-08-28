@@ -2,10 +2,10 @@
  * TODO(design): The Design Agent owns this surface. Intentionally empty —
  * do not add layout, copy or imagery here.
  */
-export default function Contact() {
+export default function Product() {
   return (
-    <section data-testid="contact-page">
-      <h1>Contact</h1>
+    <section data-testid="product-page">
+      <h1>Product</h1>
     </section>
   )
 }

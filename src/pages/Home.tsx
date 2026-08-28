@@ -1,7 +1,11 @@
+/**
+ * TODO(design): The Design Agent owns this surface. Intentionally empty —
+ * do not add layout, copy or imagery here.
+ */
 export default function Home() {
   return (
-    <main data-testid="home-page">
+    <section data-testid="home-page">
       <h1>Home</h1>
-    </main>
+    </section>
   )
 }

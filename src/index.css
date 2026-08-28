@@ -1,1 +1,17 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Design tokens. Neutral placeholders only — the Design Agent owns the real
+ * palette and is expected to overwrite these values.
+ */
+:root {
+  --color-bg: #ffffff;
+  --color-fg: #111111;
+  --color-accent: #666666;
+}
+
+html {
+  scroll-behavior: smooth;
+}

@@ -1,18 +1,20 @@
+import { fileURLToPath, URL } from 'node:url'
+
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
-// Port is allocated per-project/per-worktree by the platform.
-// `.biela/ports.mjs` is not present in this workspace yet, so we read PORT from
-// the environment instead of hardcoding a literal. Swap to `readPorts()` once
-// the shim exists.
-const port = process.env.PORT ? Number(process.env.PORT) : undefined
-
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   server: {
+    // The preview is proxied in from an external hostname. Binding to
+    // localhost only, or leaving the host allowlist on, renders a blank page.
     host: true,
-    port,
     allowedHosts: true,
   },
 })
