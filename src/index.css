@@ -3,15 +3,203 @@
 @tailwind utilities;
 
 /*
- * Design tokens. Neutral placeholders only — the Design Agent owns the real
- * palette and is expected to overwrite these values.
+ * Manaber design tokens.
+ *
+ * Flat fills, zero radius, zero gradients. Six colours plus black and white:
+ * periwinkle #8587FF, lavender #C0C0FF, lime #C8FC00, indigo #2E0A78,
+ * slate #4A4458. Headings are an upright roman serif at regular weight; body
+ * is Inter, with lead paragraphs set bold. See design_planning.md.
  */
 :root {
   --color-bg: #ffffff;
-  --color-fg: #111111;
-  --color-accent: #666666;
+  --color-fg: #000000;
+  --color-periwinkle: #8587ff;
+  --color-lavender: #c0c0ff;
+  --color-lime: #c8fc00;
+  --color-indigo: #2e0a78;
+  --color-slate: #4a4458;
+  --color-hairline: rgba(0, 0, 0, 0.14);
+  /* The speech-bubble tail. Change it here and every tail follows. */
+  --tail-w: 34px;
+  --tail-h: 30px;
 }
 
-html {
-  scroll-behavior: smooth;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /*
+   * Serif headings never render italic and never render bold. Scoped to the
+   * elements rather than to `.font-display`: hand-writing a rule for that
+   * selector collides with Tailwind's fontFamily utility of the same name and
+   * suppresses it, which silently drops the serif everywhere.
+   */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-style: normal;
+    font-synthesis-weight: none;
+  }
+
+  /* Visible focus rings everywhere, keyboard-only. Square, like everything. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-offset-2 ring-offset-white;
+    --tw-ring-color: #2e0a78;
+    border-radius: 0;
+  }
+
+  /* On dark and saturated grounds the indigo ring disappears — flip it. */
+  .on-dark :focus-visible {
+    --tw-ring-color: #c8fc00;
+    --tw-ring-offset-color: #000000;
+  }
+
+  ::selection {
+    background-color: var(--color-lime);
+    color: #000000;
+  }
+}
+
+@layer components {
+  /*
+   * THE SIGNATURE MOTIF — the speech-bubble tail.
+   *
+   * A triangular notch projecting off a card, filled with the card's own
+   * colour via `background: inherit`, so it works with any Tailwind bg class
+   * without being told which one. 34 × 30px.
+   *
+   *   polygon(0 0, 100% 0, 0 100%)  →  flat top edge, vertical left edge,
+   *                                    hypotenuse running top-right to
+   *                                    bottom-left.
+   *
+   * `top-left`    sits ABOVE the card, flush with its left edge. Used on the
+   *               hero cards and the indigo slab's quote card.
+   * `bottom-left` sits BELOW the card. Used on cards overlaid onto photos and
+   *               on article-style cards.
+   *
+   * A card carrying a tail must never also carry `overflow-hidden` — the tail
+   * lives outside the box and would be clipped away.
+   */
+  .bubble {
+    position: relative;
+  }
+
+  .bubble[data-tail]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: var(--tail-w);
+    height: var(--tail-h);
+    background: inherit;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    pointer-events: none;
+  }
+
+  .bubble[data-tail='top-left']::before {
+    bottom: 100%;
+  }
+
+  .bubble[data-tail='bottom-left']::before {
+    top: 100%;
+  }
+
+  /* Uppercase letter-spaced label. Buttons and eyebrows share this face. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-label font-medium uppercase tracking-eyebrow;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /*
+   * The tail motif again, at section scale: a black wedge dropping out of the
+   * bottom edge of the lavender FAQ ground into the black footer.
+   */
+  .section-notch {
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Scroll reveal — BELOW THE FOLD ONLY.
+ * Driven by a single shared IntersectionObserver (see src/hooks/useReveal.ts).
+ * Elements start hidden and are revealed when `.is-revealed` lands. Anything
+ * above the fold must never carry `.reveal`; it renders at final opacity and
+ * position on first paint.
+ * ------------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 750ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 750ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-delay-1.is-revealed { transition-delay: 80ms; }
+.reveal-delay-2.is-revealed { transition-delay: 160ms; }
+.reveal-delay-3.is-revealed { transition-delay: 240ms; }
+.reveal-delay-4.is-revealed { transition-delay: 320ms; }
+.reveal-delay-5.is-revealed { transition-delay: 400ms; }
+.reveal-delay-6.is-revealed { transition-delay: 480ms; }
+
+/* Safety net: if JS never runs (or the observer never fires), nothing stays
+ * invisible. Content is always readable. */
+.no-js .reveal,
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * AI image swap states.
+ * ------------------------------------------------------------------------ */
+picture[data-ai-status='pending'] img {
+  opacity: 0.6;
+  transition: opacity 300ms;
+}
+
+picture[data-ai-status='ready'] img {
+  opacity: 1;
 }

@@ -13,39 +13,100 @@ Do this once, on the user's message this turn — not on every subsequent tool c
 # Project State
 
 ## Current Phase
-Discovery
+Build complete — reviewed, fixed, verified. Not deployed.
 
 ## Project Type
 project_type: web_app
 project_type_source: inferred
 visual_tier: premium
-data: (pending — depends on lead-capture answer)
+data: none
 
-## Brief
-Build a React + TypeScript marketing website for **manaber.ai**, visually and
-structurally modelled on **stenomatic.ai**.
+## What exists
+React 18 + TypeScript + Vite 8 + Tailwind 3.4.19 + react-router-dom v6
+marketing site for **manaber.ai** — an on-device AI live translation app for
+mosques, conferences and events (Dubai, UAE). Structure and polish modelled on
+stenomatic.ai; identity is Manaber's own emerald.
 
-## Active Tasks
-- Research: manaber.ai content/brand extraction (running)
-- Research: stenomatic.ai design system + section architecture (running)
-- Discovery questions sent to user (fidelity / scope / lead capture)
+**Routes:** `/` · `/features` · `/use-cases` · `/contact` · `/privacy` · 404
+**Design system:** emerald scale around `#10B981`, warm neutrals, Inter (body)
++ Instrument Serif (display italic accent), radius/shadow scales,
+`tracking-eyebrow`, one shared refcounted IntersectionObserver (`useReveal`).
+**Images:** 7 AI-generated via Runware, all verified swapped into source.
 
-## Recent Activity
-- Project created
-- Project type pre-inferred as web_app — picker skipped
-- Dispatched two parallel research passes
+## Completed
+- Research: manaber.ai content/brand → `research/manaber-site.md`
+- Research: stenomatic.ai design system → `research/stenomatic-design.md`
+- Scaffold (Vite/React/TS/router/Tailwind), Tailwind v4→v3 syntax bug fixed
+- `plan_images` — 7 slots, all landed
+- Design system + Header/Footer + 9-section Home
+- Features, Use Cases, Contact, Privacy built in parallel
+- Design audit — applied fixes (see below)
+- Code review — APPROVE, 3 medium findings, all fixed
+- Final: `npm run build` clean, `npm run lint` exit 0, 11 image literals intact
 
-## Next Steps
-1. Merge research findings + user answers into discovery/brief.md
-2. Coding Agent — Vite + React + TS technical scaffold ONLY (premium tier: scaffold before design)
-3. plan_images for all visual slots
-4. Design Agent — full visual build
+## Design audit fixes applied
+Above-the-fold content was gated on IntersectionObserver on 3 routes (hard-rule
+breach) · `bg-emerald-950` was dead code losing to `bg-neutral-950` in Tailwind's
+output order · interior mastheads rebalanced to use the right column · two
+contrast failures fixed (footer 4.06:1→7.8:1; micro-labels 2.5:1) · Use Cases
+renumbered to reading order · h1 scale unified, `7xl` deferred to `xl` ·
+icon-chip sizing unified · Header drawer now closes before the new route paints.
 
-## Notes
-- Coolify is configured (instance biela-ent-21) — deploy available on request
-- Research mode: QUICK
+## Code review fixes applied
+1. `ScrollToTop.tsx` — cross-page hash links now resolve their anchor. I then
+   rewrote the guard with two refs (pathname + hash) so the Footer's
+   `/features#languages` also works when clicked from `/features` itself; the
+   agent's first version short-circuited that case.
+2. `Privacy.tsx` — scroll-spy tracks intersecting ids across observer callbacks
+   so `aria-current` no longer sticks to a section the reader has left.
+3. `Contact.tsx` — focus moves to the confirmation heading on submit.
+
+## Open Items / Risks
+- **Discovery answers were auto-submitted defaults, never actively confirmed**
+  (fidelity, page scope, no-backend). Re-confirm before deploy or spend.
+- **"25+ languages" is unverified.** It comes from Manaber's own live site, but
+  it is the one figure outside the three verified stats. Confirm against the
+  current App Store listing before this goes public.
+- **Google Play URL is a search link**, not a package URL — the real package id
+  was not verifiable. Needs replacing with the actual listing.
+- Contact form is `mailto:` only and says so honestly. Real lead capture =
+  provision Postgres on Coolify (`biela-ent-21`) — separate explicit step.
+- Existing logo not used; brand wordmark is typographic. Their real icon is at
+  `manaber.ai/wp-content/uploads/2025/08/icon-192x192-1-scaled.png`.
+
+## Content discipline held throughout
+No testimonials, client logos, case studies, awards, certifications, pricing,
+team bios, response-time promises, latency or accuracy figures. Only the three
+real stats (5.0★ · 1,000+ ratings · +70% engagement). Stenomatic's copy and
+palette were not reused. Privacy policy claims no compliance framework.
+
+## Next Steps (none in flight — awaiting user)
+- Verify the two open content items above
+- Optional: deploy to Coolify (`biela-ent-21`) on explicit request
 
 </current_state>
+
+<existing_images>
+# Already-generated images (recovered from images_library)
+
+These dataAiIds ALREADY have a generated image in the DB. Do NOT call
+plan_images for any dataAiId in this list — the image exists and will
+render via the normal slot pipeline. Use the EXACT dataAiId verbatim if
+you need to reference a slot; coining a new slug for the same conceptual
+image will trigger a duplicate generation and waste Runware credits.
+
+Total recovered slots: 7
+
+| dataAiId | url | prompt |
+| --- | --- | --- |
+| hero-visual | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/9d9a9667-8699-4561-a133-d934aa438d26.webp | Serene modern mosque interior photographed at golden hour. Warm directional sunlight streams through intricate geometric lattice windows, casting soft patterned shadows across a calm prayer hall. Wide |
+| languages-visual | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/b5cc6f20-3612-4d6d-bb31-42c0a6826b63.webp | Abstract minimal 3D render of a soft flowing gradient mesh in emerald, teal and pale mint, suggesting many connected voices converging. Smooth matte surfaces, studio HDRI lighting, generous white nega |
+| privacy-visual | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/1bdfdfc8-0079-4097-96ae-f7045b8ee00b.webp | Minimal studio photograph of a single modern smartphone resting on a matte slate surface, lit by soft directional light with a subtle emerald green rim highlight along one edge. Clean, calm, premium t |
+| usecase-conference | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/9a85b22c-98d0-420b-bd8a-34675e8c985f.webp | Modern conference auditorium seen from the side, an attentive seated audience facing a softly lit stage. Cool neutral tones with a subtle warm key light, clean contemporary interior design, shallow de |
+| usecase-business-meeting | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/ca2b5246-ca4d-4ff5-8779-63b4703d6f0f.webp | Bright modern meeting room with a small diverse team seated around a light wood table in soft window daylight. Calm professional atmosphere, minimal interior, muted neutral palette with a hint of gree |
+| usecase-friday-sermon | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/a236c4a7-1d82-43ef-8560-3c163bc7121a.webp | Wide, respectful photograph of a spacious mosque prayer hall filled with soft natural daylight. Warm neutral stone and carpet tones, clean architectural lines, calm and reverent atmosphere. Documentar |
+| usecase-education | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/04846f8b-09c4-4718-ad4f-4a1b9db39e78.webp | Calm university lecture room with students seated in rows, warm natural light from tall windows, neutral wood and off-white tones. Focused studious atmosphere, documentary style, shallow depth of fiel |
+</existing_images>
 
 <discovery_brief>
 # Project Brief — Manaber.ai Website
@@ -176,7 +237,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-28, 13:53
+User current local time: 2026-08-29, 13:11
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>
@@ -192,5 +253,88 @@ Configured instances:
   - biela-ent-21 (default) — id=163649488, url=http://localhost:8000
 When the user names a specific instance ("deploy to Staging"), pass the instance name in the infra task; otherwise the default is used.
 
+[DEV_SERVER]
+Status: running
+Local URL: http://localhost:26002 (only reachable inside this server)
+Public URL: https://manaber-ai-website-26002.demo4.hubdesk.ai
+IMPORTANT: Always use the Public URL when the user asks for a link, preview, or wants to open the app from their phone or browser. Never give localhost to the user.
+
 [INTERNAL_GIT]
 If you probe the git remote "origin" (ssh://git@localhost:2222/...) from within your own execution here, it will report "Connection refused" on port 2222 — that is expected, not evidence the internal git server is down. "localhost" in this context is this sandboxed container's own loopback, not the host; the internal git server is healthy and real pushes (which run host-side, not from here) are unaffected. If you genuinely need to check reachability from within this turn, use host.docker.internal:2222 instead of localhost:2222.
+
+[BLOCKCHAIN]
+BLOCKCHAIN DEVELOPMENT TOOL DOCUMENTATION:
+
+TOOL: create_blockchain_wallet (you may also see it as
+mcp__orchestrator__create_blockchain_wallet). It takes NO parameters — call
+it with an empty argument object.
+
+IMPORTANT — this tool's own description may be hidden from you. Tool schemas
+get deferred, so you may only ever see this tool's NAME in your tool list and
+never read what it does. That is why its documentation is repeated here, in
+full: do NOT skip calling it just because you cannot see its description, and
+do NOT go looking up its schema before using it. It takes no arguments, and
+everything you need to decide is written below.
+
+WHEN TO USE: Call it when the user asks for blockchain-specific
+functionality, and only ONCE per project. Without calling it you have ZERO
+blockchain development knowledge and cannot deliver what the user asked for.
+e.g.: "let's create a crypto token", "build a decentralised exchange".
+
+MANDATORY SEQUENCING — THIS IS THE PART THAT GETS MISSED:
+Call it BEFORE any contract work begins. Before you write contract code
+yourself, and BEFORE you delegate the build to a coding agent. The blockchain
+instructions, the required project architecture, and the contract-generation
+tools do not exist for this project until it has run. A build dispatched
+first is scaffolded without them — no Hardhat layout, no Factory.sol — and
+has to be thrown away and redone from scratch. It is the FIRST step, not a
+finishing touch.
+
+BEFORE CALLING, ask yourself:
+1. "Do I need a wallet for future interactions with this project — deploying,
+   signing transactions?"
+2. "Is the user developing a decentralized app?"
+3. "Am I going to create smart contracts?"
+If the answer to any of those is yes, call it now.
+
+DO NOT CALL IT for projects that only talk ABOUT blockchain and write no
+contracts — a blog, a landing page, a dashboard reading a public price API.
+e.g.: "let's build a blog about blockchain" — no wallet.
+Also do not call it a second time on a project that already has one.
+
+AFTER THE USER DEPLOYS CONTRACTS:
+The Smart Contracts panel sends you a message automatically once contracts
+have been deployed, asking you to redeploy the website. When that arrives:
+- Do NOT deploy the contracts again. They are already live and the new
+  addresses are already written to public/deployment.json.
+- Redeploy the site on whichever host this project is ALREADY deployed on.
+  Check what it uses rather than assuming — some projects deploy to Vercel,
+  others to Coolify through the infra agent, which owns the app's uuid.
+- If the project has never been deployed anywhere, DEPLOY IT TO COOLIFY now,
+  via the infra agent. Do not ask first and do not stop to report that no
+  deployment exists — the contracts are already live on a real chain, so the
+  site belongs live too, and that is the whole point of this request.
+  Only if Coolify is not configured on this platform at all should you stop
+  and tell the user, since then there is nothing to deploy to.
+
+EVM-ONLY Inforcement:
+For now, you are able to create ONLY EVM-based smart contracts.
+If the user requests for NON-EVM development, such as Solana, kindly
+guide him into using EVM, telling him NON-EVM development is not
+supported yet.
+Do not ask the user which chain he wants the app to be deployed on.
+Biela supports multiple EVM chains for deployment, which the users can
+select at deploy time.
+
+USER INSTRUCTIONS NOT CLEAR:
+When user's instructions are not very clear, you can use the most common
+option for development.
+For example, if an user asks for a crypto coin, create an ERC20 contract
+with the name SimpleCoin, SCOIN ticker and 1 million supply, alongside
+the hardhat node and the dashboard-like interface for interacting with
+the token.
+NEVER create JUST the smart contract code, but ALWAYS create the entire
+project's arhitecture as you will be instructed in CODING MODE.
+
+[RESEARCH MODE: QUICK]
+The user has selected Quick Research. Do NOT use Workflow("deep-research"). Instead call Agent({ subagent_type: 'research', ... }) with a concise task: 2–3 targeted web searches, extract key facts, write a brief summary. Target completion: under 2 minutes. Skip adversarial claim verification.

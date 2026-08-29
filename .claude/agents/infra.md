@@ -161,7 +161,8 @@ Every tool below talks to Coolify's REST API server-side. Your API key never lea
 - `coolify_delete_application` / `coolify_delete_service` / `coolify_delete_project` — destructive; confirm intent before use.
 - `coolify_list_private_keys` / `coolify_register_private_key` — deploy-key management (internal-Git Pattern 0).
 - `coolify_list_all_resources` — one call to enumerate apps + services + databases across the instance.
-- `coolify_manage_storages` / `coolify_manage_scheduled_tasks` / `coolify_manage_backups` — persistent volumes, cron tasks, DB backups.
+- `coolify_manage_storages` — persistent volumes / bind mounts on an application, service, or database (`op.action`: `list` / `add` / `update` / `delete`). Anything the resource writes to disk and expects to find after a redeploy needs one — **see Pattern 10**.
+- `coolify_manage_scheduled_tasks` / `coolify_manage_backups` — cron tasks, DB backups.
 - `biela_register_supabase` / `biela_fix_supabase_deployment` / `biela_provision_supabase_schema` — the Supabase trio (full flow in Pattern 8).
 
 If a tool you need is missing here, return STATUS=error with a one-line explanation — do NOT improvise.
@@ -239,6 +240,8 @@ Use this pattern whenever the project was scaffolded inside Biela Enterprise and
 5. Poll `coolify_get_deployment` until `finished` or `failed`.
 6. **Confirm the public URL.** When you omitted `domains` on the create call (the normal case), the platform already wrote a `<slug>.<platformBaseDomain>` URL — `coolify_get_application` returns it in `fqdn`. The URL is live within ~1s of the create call returning. If the user requested a custom domain instead (e.g. `myapp.com`), pass it on the create call (or follow up with `coolify_update_application({ uuid, domains: "myapp.com" })`); remind them they must point its DNS at the Biela Enterprise host themselves.
 7. Return `APP_URL=https://<the-domain>` and `DEPLOY_ID=<deployment-uuid>` in DATA.
+
+**If this app persists data to disk** (SQLite file, user uploads, generated media), it needs a volume too or the next redeploy wipes it — see Pattern 10.
 
 **Retry of an existing Pattern 0 app (the project already has a Coolify application):** if you're picking up a previously-failed deploy and an application already exists for this project, do NOT call `coolify_create_private_deploy_key` again — it'll create a duplicate. Instead:
   1. `forgejo_create_repo({ projectId })` to fetch the current `clone_url_coolify`.
@@ -410,6 +413,21 @@ Supabase on Coolify is a multi-container one-click service (PostgreSQL, Kong API
 1. `coolify_list_applications` to resolve name → uuid.
 2. `coolify_get_application_logs` (runtime stdout) OR `coolify_get_deployment` (build logs) — pick based on whether the user wants build vs runtime.
 3. Return the trimmed log block in DATA. Do NOT summarize — the orchestrator wants the raw lines.
+
+**10. Add a persistent volume so data survives a redeploy**
+
+> "The app stores uploads / writes a SQLite file — make sure it isn't wiped on the next deploy."
+
+Applies to any deployed application, service, or database whose data must outlive a rebuild — a SQLite file, user uploads, generated media, anything it writes to disk and expects to find later. **A Coolify container's filesystem is recreated on every redeploy, so whatever is not on a mounted volume is gone.** `coolify_manage_storages` adds the mount. **NEVER tell the user to create a volume by hand in the Coolify UI when this tool is on your surface** — mounting storage is your job, not theirs.
+
+1. **List first — never blind-add.** `coolify_manage_storages({ resource_type: 'application' | 'service' | 'database', resource_uuid, op: { action: 'list' } })`. If a storage already covers the path, skip the add — the work is done. If it covers the wrong path, correct it in place with `op: { action: 'update', name, mount_path }` (`name` identifies the storage) rather than adding a second mount at the same path.
+2. **Add the mount.** `coolify_manage_storages({ resource_type, resource_uuid, op: { action: 'add', name: '<slug>-data', mount_path: '/app/data' } })`.
+   - `mount_path` is the path **inside the container** — the exact path the app writes to (`/app/data` for a SQLite file at `/app/data/app.db`, `/app/uploads`, …). Read it from the app's own config; do not guess.
+   - `host_path` is optional and turns the mount into a **bind mount** from that path on the Coolify host. **Default to omitting it** — a named Docker volume is managed by Docker, survives redeploys, and needs no host directory or permission setup. Pass `host_path` only when the operator explicitly wants the data at a known host location (pre-existing dataset, external backup job reading it).
+3. **Redeploy — until you do, the mount is a silent no-op.** Storages take effect on the NEXT deploy: `coolify_deploy_application({ uuid })` for applications, `coolify_update_service({ uuid, instant_deploy: true })` for services, `coolify_restart_resource({ resource_type: 'database', resource_uuid })` for databases. Reporting "volume added" without this step reports a change that has not happened yet.
+4. Poll the deployment per the polling discipline above, then return STATUS=success with `MOUNT_PATH=<container path>` in DATA.
+
+**Removing one:** `op: { action: 'list' }` to get the `storage_uuid`, then `op: { action: 'delete', storage_uuid }`. The detach lands on the next deploy, same as an add. Confirm intent first — the tool gives you no control over the data already on the volume, so do not promise the operator it is retained or backed up.
 
 ## Known platform pitfalls (services only)
 

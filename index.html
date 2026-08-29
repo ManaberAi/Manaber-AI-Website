@@ -4,7 +4,35 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Manaber</title>
+    <meta
+      name="description"
+      content="Manaber delivers real-time AI translation and captioning on your device. Nothing you say or hear is ever uploaded. Built in Dubai for mosques, conferences and beyond."
+    />
+    <meta name="theme-color" content="#000000" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Serif:opsz,wght@8..144,300..600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Manaber — AI Live Translation for Mosques, Conferences & Beyond</title>
+  
+  <!-- Biela: broken-image fallback — replaces missing local-path images with a neutral placeholder -->
+  <script data-biela-img-guard="1">
+    (function () {
+      var PLACEHOLDER = 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800';
+      document.addEventListener('error', function (e) {
+        var t = e.target;
+        if (!(t instanceof HTMLImageElement)) return;
+        var src = t.getAttribute('src') || '';
+        // Only intercept local/relative paths — never loop on the placeholder itself
+        if (!src || src.startsWith('https://') || src.startsWith('data:') || src === PLACEHOLDER) return;
+        t.src = PLACEHOLDER;
+        t.style.objectFit = 'cover';
+        t.style.filter = 'grayscale(0.5) opacity(0.7)';
+      }, true);
+    })();
+  </script>
   </head>
   <body>
     <div id="root"></div>
