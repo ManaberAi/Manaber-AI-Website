@@ -520,7 +520,7 @@ export const SOLUTIONS: readonly Solution[] = [
     accent: 'lavender',
     image: {
       id: 'usecase-mosque-announcements',
-      src: 'https://images.pexels.com/photos/2233416/pexels-photo-2233416.jpeg?search_term=mosque,courtyard,community&img_prompt=Warm%20documentary%20photograph%20of%20a%20mosque%20courtyard%20after%20prayer%2C%20a%20small%20group%20of%20people%20standing%20and%20talking%20in%20soft%20late%20afternoon%20daylight.%20Neutral%20stone%20and%20sand%20tones%2C%20clean%20architectural%20lines%2C%20calm%20unhurried%20atmosphere.%20Shallow%20depth%20of%20field%2C%2050mm%2C%20respectful%20and%20candid&w=1500&h=1125&type=image',
+      src: 'https://app-5999.demo4.hubdesk.ai/api/studio/i/cover/1500x1174/i/enterprise/images-library/img_lB9H8WxjOeLnYx9w.webp/img_lB9H8WxjOeLnYx9w-1500x1174.webp',
       alt: 'People gathered and talking in a mosque courtyard in soft late afternoon daylight',
       width: 1500,
       height: 1125,
@@ -619,7 +619,7 @@ export const SOLUTIONS: readonly Solution[] = [
     accent: 'lime',
     image: {
       id: 'usecase-team-meetings',
-      src: 'https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?search_term=team,standup,office&img_prompt=Small%20diverse%20team%20standing%20together%20around%20a%20wall-mounted%20screen%20in%20a%20bright%20modern%20workspace%2C%20soft%20window%20daylight.%20Muted%20neutral%20palette%20with%20a%20hint%20of%20green%2C%20minimal%20interior%2C%20focused%20collaborative%20mood.%20Documentary%20style%2C%20shallow%20depth%20of%20field&w=1500&h=1125&type=image',
+      src: 'https://app-5999.demo4.hubdesk.ai/api/studio/i/cover/1500x1174/i/enterprise/images-library/img_RKp1HHmppGVcm8bP.webp/img_RKp1HHmppGVcm8bP-1500x1174.webp',
       alt: 'A small diverse team standing together around a wall-mounted screen in a bright modern workspace',
       width: 1500,
       height: 1125,

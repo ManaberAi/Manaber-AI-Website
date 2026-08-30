@@ -84,10 +84,14 @@ render via the normal slot pipeline. Use the EXACT dataAiId verbatim if
 you need to reference a slot; coining a new slug for the same conceptual
 image will trigger a duplicate generation and waste Runware credits.
 
-Total recovered slots: 7
+Total recovered slots: 11
 
 | dataAiId | url | prompt |
 | --- | --- | --- |
+| small-diverse-team-standing-together-7a75 | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/575373f4-3370-459f-baaf-d5b0feeaa7da.webp | Small diverse team standing together around a wall-mounted screen in a bright modern workspace, soft window daylight. Muted neutral palette with a hint of green, minimal interior, focused collaborativ |
+| warm-documentary-photograph-of-a-33e9 | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/5839d4a0-941e-4453-88d2-66dcbb1434d9.webp | Warm documentary photograph of a mosque courtyard after prayer, a small group of people standing and talking in soft late afternoon daylight. Neutral stone and sand tones, clean architectural lines, c |
+| usecase-mosque-announcements | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/cd11c5ff-f24b-4475-85a3-d91c8451f17d.webp | Warm documentary photograph of a mosque courtyard shortly after prayer, a small group of people standing and talking together in soft late afternoon daylight. Neutral stone and sand tones with a faint |
+| usecase-team-meetings | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/eb7a35c1-5333-4682-8a96-77a1f1195bbb.webp | A small diverse team standing together around a wall-mounted screen in a bright modern workspace, lit by soft window daylight. Muted neutral palette with a subtle green accent, minimal interior, focus |
 | hero-visual | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/9d9a9667-8699-4561-a133-d934aa438d26.webp | Serene modern mosque interior photographed at golden hour. Warm directional sunlight streams through intricate geometric lattice windows, casting soft patterned shadows across a calm prayer hall. Wide |
 | languages-visual | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/b5cc6f20-3612-4d6d-bb31-42c0a6826b63.webp | Abstract minimal 3D render of a soft flowing gradient mesh in emerald, teal and pale mint, suggesting many connected voices converging. Smooth matte surfaces, studio HDRI lighting, generous white nega |
 | privacy-visual | https://im.runware.ai/image/os/w05dlim3/ws/3/ii/1bdfdfc8-0079-4097-96ae-f7045b8ee00b.webp | Minimal studio photograph of a single modern smartphone resting on a matte slate surface, lit by soft directional light with a subtle emerald green rim highlight along one edge. Clean, calm, premium t |
@@ -226,7 +230,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-30, 12:23
+User current local time: 2026-08-31, 00:00
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>
