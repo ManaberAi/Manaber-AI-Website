@@ -1,19 +1,18 @@
 import Button from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
-import { StarIcon } from '@/components/ui/Icon'
 
 /**
  * The white band that sits where the reference puts its logo wall. Manaber has
- * no client logos to show, so the space carries the three VERIFIED numbers
- * instead — nothing here is invented — with the contact CTA as counterweight
- * and a hairline closing the band.
+ * no client logos to show, so the space carries its VERIFIED figure instead —
+ * nothing here is invented — with the contact CTA as counterweight and a
+ * hairline closing the band.
+ *
+ * The storefront rating and ratings count went with the store links:
+ * the app has no public listing, so neither figure can be stood behind. Rather
+ * than leave one number stranded in a three-column grid, the survivor is set
+ * larger and given the left half of the band outright, with a supporting line
+ * underneath it — the band now reads as a statement, not a row with two gaps.
  */
-
-const STATS = [
-  { value: '5.0', suffix: '', star: true, label: 'App Store rating' },
-  { value: '1,000', suffix: '+', star: false, label: 'Ratings' },
-  { value: '+70', suffix: '%', star: false, label: 'Audience engagement' },
-]
 
 export default function StatsBand() {
   return (
@@ -28,28 +27,24 @@ export default function StatsBand() {
         </h2>
 
         <div className="grid grid-cols-12 gap-y-12">
-          <dl className="reveal col-span-12 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-8 lg:col-span-7">
-            {STATS.map((stat) => (
-              <div key={stat.label}>
-                <dd className="flex items-baseline gap-1.5 font-display text-display-md font-normal text-ink">
-                  {stat.value}
-                  {stat.star ? (
-                    <StarIcon
-                      aria-hidden="true"
-                      className="h-7 w-7 shrink-0 text-indigo lg:h-8 lg:w-8"
-                    />
-                  ) : (
-                    <span className="text-indigo">{stat.suffix}</span>
-                  )}
-                </dd>
-                <dt className="mt-3 text-label uppercase tracking-eyebrow text-ink/55">
-                  {stat.label}
-                </dt>
-              </div>
-            ))}
-          </dl>
+          <div className="reveal col-span-12 lg:col-span-5">
+            <dl>
+              <dd className="flex items-baseline gap-1.5 font-display text-display-lg font-normal leading-none text-ink">
+                +70<span className="text-indigo">%</span>
+              </dd>
+              <dt className="mt-5 text-label uppercase tracking-eyebrow text-ink/55">
+                Audience engagement
+              </dt>
+            </dl>
 
-          <div className="reveal reveal-delay-1 col-span-12 lg:col-span-4 lg:col-start-9">
+            <p className="mt-6 max-w-[32ch] text-lg leading-relaxed text-ink/70">
+              More of the room following the speaker, in the language each person
+              reads — rather than taking away the tone of a talk instead of its
+              argument.
+            </p>
+          </div>
+
+          <div className="reveal reveal-delay-1 col-span-12 lg:col-span-6 lg:col-start-7">
             <p className="text-lg font-bold leading-snug text-indigo">
               Live translation that runs on the device itself. No account, no
               upload, nothing collected.

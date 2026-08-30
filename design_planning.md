@@ -266,7 +266,10 @@ All live in `src/components/ui/`.
 | `Section` | Ground slab: `white` `black` `indigo` `lavender` `periwinkle` `lime`. |
 | `Eyebrow` | Uppercase label. Tones `ink` `indigo` `lime` `lavender` `periwinkle` `muted`. `withMark` is off by default. |
 | `Container` | The 1200px shell. |
-| `StoreButtons` | Real store links. Tones `black` `lime` `white` `outline-light` `outline-dark`. Both buttons always share one fill. |
+
+> `StoreButtons` was **deleted**, not restyled. The app has no public
+> storefront listing, so there is nothing to link to. Every call to action on
+> the site routes to `/contact` instead.
 | `Icon` | Inline SVG set, 24×24, stroke, `currentColor`. |
 
 ### 7.1 Legacy prop aliases — do not use in new work
@@ -276,7 +279,6 @@ So the not-yet-restyled pages keep compiling, these old values still resolve:
 - `Section tone`: `tint`→lavender, `emerald`→periwinkle, `dark`→black
 - `Card tone`: `raised`→white+border, `plain`→lavender, `dark`→black
 - `Eyebrow tone`: `emerald`→indigo, `neutral`→`ink/55`, `light`→lime
-- `StoreButtons tone`: `dark`→black, `light`→white, `outline`→outline-light
 - `Button variant`: `primary`→lime, `secondary`→outline-dark, `ghost`→ghost
 
 **Phase 2 must replace every one of these with a canonical name and then these
@@ -289,10 +291,15 @@ aliases should be deleted.**
 - **Nothing is fabricated.** No client logos, no "Trusted by" wall, no
   testimonials, no case studies, no blog posts, no pricing, no awards, no
   latency or accuracy figures, no invented quotes or named people.
-- The **only** real metrics are: **5.0★ App Store rating · 1,000+ ratings ·
-  +70% audience engagement**. Do not add a fourth.
+- The **only** real figures are **+70% audience engagement** and the
+  **25+ languages** count. Do not coin a third. The storefront rating and the
+  ratings count were removed along with the store links — the app has no public
+  listing, so neither number can be stood behind.
+- **The app does not exist publicly yet.** No download, no storefront, no
+  "coming soon", no waiting list, no launch date. Every CTA routes to
+  `/contact`.
 - Real contact details, from `src/lib/site.ts`: `contact@manaber.ai` ·
-  `+971 50 216 4876` · Dubai, UAE · the real App Store and Google Play links.
+  `+971 50 216 4876` · Dubai, UAE.
 - Where the reference site has content Manaber does not have, the slot is
   **re-purposed, not faked** — its logo wall became the stats band; its
   testimonial panel became a product statement on the indigo slab.
@@ -301,7 +308,10 @@ aliases should be deleted.**
 
 ### 8.1 Images — frozen
 
-There are exactly **7** AI-generated images and **no new ones may be created**.
+There are exactly **9** AI-generated images. Seven were frozen in phase 1; the
+two `usecase-mosque-announcements` / `usecase-team-meetings` frames were added
+with the solution pages and are the last additions. **No further new ones may
+be created.**
 Reuse them by keeping each `<img src>` URL string **byte-identical** — never
 retype it, never build it with a template literal, never compute it. Moving an
 `<img>` to a different component is fine; altering its `src` is not.
@@ -311,10 +321,18 @@ retype it, never build it with a template literal, never compute it. Moving an
 | `hero-visual` | `home/Hero.tsx` |
 | `privacy-visual` | `home/HeroCards.tsx` |
 | `languages-visual` | `home/HeroCards.tsx` |
-| `usecase-friday-sermon` | `home/UseCaseBento.tsx`, `pages/UseCases.tsx` |
-| `usecase-conference` | `home/UseCaseBento.tsx`, `pages/UseCases.tsx` |
-| `usecase-business-meeting` | `home/UseCaseBento.tsx`, `pages/UseCases.tsx` |
-| `usecase-education` | `home/UseCaseBento.tsx`, `pages/UseCases.tsx` |
+| `usecase-friday-sermon` | `home/UseCaseBento.tsx`, `pages/UseCases.tsx`, `lib/solutions.ts` |
+| `usecase-conference` | `home/UseCaseBento.tsx`, `pages/UseCases.tsx`, `lib/solutions.ts` |
+| `usecase-business-meeting` | `home/UseCaseBento.tsx`, `pages/UseCases.tsx`, `lib/solutions.ts` |
+| `usecase-education` | `home/UseCaseBento.tsx`, `pages/UseCases.tsx`, `lib/solutions.ts` |
+| `usecase-mosque-announcements` | `lib/solutions.ts` |
+| `usecase-team-meetings` | `lib/solutions.ts` |
+
+The six use-case frames now live as literal `src` strings in
+`src/lib/solutions.ts` and are rendered by `pages/SolutionDetail.tsx` through
+`<img src={image.src} data-ai-id={image.id}>`. The URL literal is what the
+image pipeline find-and-replaces, so it must stay a plain quoted string in the
+data file — never a template literal, never assembled from parts.
 
 > **Known follow-up for the client:** `privacy-visual` and `languages-visual`
 > are abstract renders in the *old* emerald/teal palette and now sit inside
@@ -329,10 +347,14 @@ retype it, never build it with a template literal, never compute it. Moving an
 These carry fixes from an earlier review. **Restyle them; do not rewrite their
 logic.**
 
-- Routes: `/` `/features` `/use-cases` `/contact` `/privacy` + `*` → `NotFound`.
+- Routes: `/` `/features` `/use-cases` `/solutions/:slug` `/contact` `/privacy`
+  + `*` → `NotFound`. An unknown solution slug renders `NotFound` too.
 - `ScrollToTop` — route-change scroll reset **and** its `<Link>` hash handling.
 - The Privacy page's scroll-spy.
 - `<NavLink>` in the header, with the active page marked (lime underline).
+- The header drawer closes **before** the new route paints — the close is
+  derived during render, not run in an effect. The Solutions mega-menu uses the
+  same pattern. Do not move either into a `useEffect`.
 - `vite.config.ts` `allowedHosts: true` and the `dev:host` script.
 - Forms use react-hook-form + zod with `noValidate` and inline, brand-voiced
   errors.
@@ -346,17 +368,91 @@ logic.**
 | — | `layout/Header` | white card | Floating, sharp, `shadow-lift`, lime CTA + lime-outlined secondary. |
 | 1 | `home/Hero` | photographic + `bg-ink/75` | Serif `h1`, bold white subhead, lime + white-outline buttons. Above fold — no `.reveal`. |
 | 2 | `home/HeroCards` | none (straddles hero edge) | 3 `top-left` bubble cards: periwinkle / lime / lavender. |
-| 3 | `home/StatsBand` | white | The 3 real stats + store buttons, closed by a hairline. |
+| 3 | `home/StatsBand` | white | The ONE real figure (+70%), set large across the left half, with a supporting line, the bold indigo claim and the contact CTA opposite. Closed by a hairline. |
 | 4 | `home/SplitFeature` | white | Serif headline + bold indigo lead + lime CTA / 5 capability rows. |
 | 5 | `home/PrivacySlab` | indigo | Lavender `top-left` bubble carrying the product claim. No quote, no person. |
 | 6 | `home/UseCaseBento` | black | 6 use cases, `7+5 · 4+4+4 · 12`. 4 photo cards with `bottom-left` overlay bubbles + 2 flat icon cards. |
-| 7 | `home/SplitCta` | white | Serif headline / lime panel with real store links + contact. |
+| 7 | `home/SplitCta` | white | Serif headline / lime panel with the contact CTA and real contact details. |
 | 8 | `home/Faq` | lavender | White sharp rows, serif questions, `+` rotating 45°. Closes with the black `.section-notch`. |
-| — | `layout/Footer` | black | 4 link columns, hairline, wordmark row. |
+| — | `layout/Footer` | black | 5 link columns (Solutions · Product · Company · Contact · Get in touch) at `3+2+2+2+3`, hairline, wordmark row. |
 
 ---
 
-## 11. Pre-ship checklist
+## 11. Solutions — six detail pages from one component
+
+`/solutions/:slug` is **data-driven, not six hand-written pages.** All six
+routes render `src/pages/SolutionDetail.tsx`; everything that differs between
+them lives in `src/lib/solutions.ts`.
+
+### 11.1 The data module
+
+`src/lib/solutions.ts` exports a typed `SOLUTIONS` array and a `getSolution()`
+lookup. The six slugs are fixed and **match the section ids on `/use-cases`**,
+so `/use-cases#friday-sermons` and `/solutions/friday-sermons` are always the
+same subject at two depths:
+
+`friday-sermons` · `conferences` · `business-meetings` ·
+`educational-sessions` · `mosque-announcements` · `team-meetings`
+
+Each entry carries: nav label + one-line nav description + nav icon, document
+title, hero headline / bold standfirst / secondary intro / bubble line, an
+accent fill, the image (literal `src`, `alt`, `data-ai-id`, dimensions), a
+four-row capability checklist, a three-step how-it-works, four capability
+cards, one privacy line and the closing CTA copy.
+
+Copy is **adapted from `pages/UseCases.tsx` and `pages/Features.tsx`**, never
+invented alongside them. If a claim is edited on one of those pages, the
+matching entry here must move with it.
+
+### 11.2 Section order — identical on all six
+
+```
+white split hero (headline + bold standfirst + Get in touch → /contact,
+                  photo right with a bottom-left overlay bubble)
+LAVENDER capability checklist (icon rows)
+white numbered 3-step how-it-works
+BLACK capability card bento (four equal slate cards, lime rule each)
+INDIGO on-device privacy slab (lavender top-left bubble — the signature)
+white closing CTA → /contact (lime panel, real contact details)
+BLACK footer
+```
+
+Nothing about that structure varies between the six. The differentiation is
+the copy, the photograph and one `accent` fill (periwinkle / lavender / lime)
+on the hero bubble — all three of which carry `text-indigo` above 4.8:1.
+
+The hero carries **no `.reveal`**: it is above the fold and renders at final
+opacity on first paint. Everything below it uses the single shared observer in
+`hooks/useReveal.ts` — never a per-element observer.
+
+### 11.3 The Solutions mega-menu
+
+`src/components/layout/SolutionsMenu.tsx` renders as a single `<li>` inside the
+header's primary list. The `<li>` is deliberately left **static** so the panel's
+`absolute inset-x-0 top-full` resolves against the nav **card** (which is
+`relative`) and drops full-width beneath it.
+
+Keyboard and a11y are part of the contract, not a nicety:
+
+- trigger carries `aria-expanded` / `aria-controls` / `aria-haspopup`
+- `ArrowDown` / `ArrowUp` on the trigger open the panel and move focus into it
+- `ArrowDown` / `ArrowUp` / `Home` / `End` move between the eight panel links
+- `Tab` and `Shift+Tab` are **trapped** inside the panel while it is open
+- `Escape` closes and returns focus to the trigger
+- an outside pointer-down, focus leaving the region, or a route change closes it
+
+The right-hand rail links `/features` and `/use-cases` only. The reference
+site's discount and free-trial cards are **not** reproduced — there is nothing
+to discount and no trial to offer.
+
+Mobile uses the drawer's collapsible **Solutions** group instead. Every link in
+it still calls `setOpen(false)`, so the drawer is gone before the new route
+paints. Do not remove that handler and do not move the route-change close into
+an effect.
+
+---
+
+## 12. Pre-ship checklist
 
 Run against every page before calling it done.
 
@@ -377,3 +473,10 @@ Run against every page before calling it done.
 - [ ] Above-the-fold content carries no `.reveal`.
 - [ ] Every `<img src>` is byte-identical to §8.1.
 - [ ] Nothing on the page is invented (§8).
+- [ ] No storefront language anywhere:
+      `grep -rniE 'apps\.apple|play\.google|download the app|app store|google play|waitlist|coming soon' src/`
+      → nothing. Every CTA routes to `/contact`.
+- [ ] All six `/solutions/*` routes resolve, and an unknown slug
+      (`/solutions/nonsense`) renders `NotFound`.
+- [ ] The mega-menu opens, closes on `Escape` with focus returned to the
+      trigger, and is fully operable without a mouse (§11.3).

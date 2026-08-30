@@ -7,6 +7,7 @@ import Features from '@/pages/Features'
 import Home from '@/pages/Home'
 import NotFound from '@/pages/NotFound'
 import Privacy from '@/pages/Privacy'
+import SolutionDetail from '@/pages/SolutionDetail'
 import UseCases from '@/pages/UseCases'
 
 export default function App() {
@@ -18,6 +19,9 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="features" element={<Features />} />
           <Route path="use-cases" element={<UseCases />} />
+          {/* One component, six entries in src/lib/solutions.ts. An unknown
+              slug renders the site's own NotFound page rather than a blank. */}
+          <Route path="solutions/:slug" element={<SolutionDetail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />

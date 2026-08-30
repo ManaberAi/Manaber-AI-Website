@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import Container from '@/components/ui/Container'
 import Eyebrow from '@/components/ui/Eyebrow'
 import {
+  ArrowRightIcon,
   BookIcon,
   BriefcaseIcon,
   ChipIcon,
@@ -34,6 +36,26 @@ const CONTENTS = [
   { id: 'mosque-announcements', label: 'Mosque Announcements' },
   { id: 'team-meetings', label: 'Team Meetings' },
 ]
+
+/**
+ * Every id above is also a route: /use-cases#friday-sermons and
+ * /solutions/friday-sermons are the same subject at two depths. The anchors on
+ * this page stay exactly as they were — the detail link is added alongside them.
+ */
+function ReadMoreLink({ slug, label }: { slug: string; label: string }) {
+  return (
+    <Link
+      to={`/solutions/${slug}`}
+      className="group mt-8 inline-flex items-center gap-2.5 text-lg font-semibold text-emerald-700 underline-offset-4 transition-colors duration-200 ease-out-expo hover:text-emerald-800 hover:underline"
+    >
+      Read more about {label}
+      <ArrowRightIcon
+        aria-hidden="true"
+        className="h-5 w-5 shrink-0 transition-transform duration-200 ease-out-expo group-hover:translate-x-1"
+      />
+    </Link>
+  )
+}
 
 type TagProps = { children: ReactNode }
 
@@ -136,6 +158,8 @@ function UseCaseBlock({
               <Tag key={tag}>{tag}</Tag>
             ))}
           </ul>
+
+          <ReadMoreLink slug={id} label={title} />
         </div>
       </div>
     </article>
@@ -465,6 +489,8 @@ export default function UseCases() {
                   <Tag>Live captions</Tag>
                   <Tag>25+ languages</Tag>
                 </ul>
+
+                <ReadMoreLink slug="mosque-announcements" label="Mosque Announcements" />
               </Card>
             </li>
 
@@ -498,6 +524,8 @@ export default function UseCases() {
                   <Tag>Live translation</Tag>
                   <Tag>On-device</Tag>
                 </ul>
+
+                <ReadMoreLink slug="team-meetings" label="Team Meetings" />
               </Card>
             </li>
           </ul>

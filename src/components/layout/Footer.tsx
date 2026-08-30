@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import Button from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
 import { SITE } from '@/lib/site'
+import { SOLUTIONS } from '@/lib/solutions'
 
-/** Black ground, four link columns, hairline rule, then the wordmark row. */
+/** Black ground, five link columns, hairline rule, then the wordmark row. */
 
 const PRODUCT_LINKS = [
   { to: '/features', label: 'Features' },
@@ -37,8 +38,21 @@ export default function Footer() {
       className="on-dark bg-ink text-white/65"
     >
       <Container className="py-20 sm:py-24">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+        <div className="grid gap-12 md:grid-cols-3 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-3">
+            <ColumnHeading>Solutions</ColumnHeading>
+            <ul className="mt-6 space-y-4">
+              {SOLUTIONS.map((solution) => (
+                <li key={solution.slug}>
+                  <Link to={`/solutions/${solution.slug}`} className={LINK_CLASS}>
+                    {solution.navLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-2">
             <ColumnHeading>Product</ColumnHeading>
             <ul className="mt-6 space-y-4">
               {PRODUCT_LINKS.map((link) => (
@@ -64,7 +78,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <ColumnHeading>Contact</ColumnHeading>
             <ul className="mt-6 space-y-4">
               <li>
@@ -81,7 +95,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-4">
+          <div className="md:col-span-2 lg:col-span-3">
             <ColumnHeading>Get in touch</ColumnHeading>
             <p className="mt-6 max-w-sm text-[1.0625rem] leading-relaxed text-white/65">
               {SITE.tagline}
