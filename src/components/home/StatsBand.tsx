@@ -1,11 +1,11 @@
+import Button from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
 import { StarIcon } from '@/components/ui/Icon'
-import StoreButtons from '@/components/ui/StoreButtons'
 
 /**
  * The white band that sits where the reference puts its logo wall. Manaber has
  * no client logos to show, so the space carries the three VERIFIED numbers
- * instead — nothing here is invented — with the store links as counterweight
+ * instead — nothing here is invented — with the contact CTA as counterweight
  * and a hairline closing the band.
  */
 
@@ -51,9 +51,12 @@ export default function StatsBand() {
 
           <div className="reveal reveal-delay-1 col-span-12 lg:col-span-4 lg:col-start-9">
             <p className="text-lg font-bold leading-snug text-indigo">
-              Free on iOS and Android. No account, no upload, nothing collected.
+              Live translation that runs on the device itself. No account, no
+              upload, nothing collected.
             </p>
-            <StoreButtons tone="black" className="mt-6" />
+            <Button as="link" to="/contact" variant="black" size="lg" className="mt-6">
+              Get in touch
+            </Button>
           </div>
         </div>
 

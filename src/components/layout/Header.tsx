@@ -4,13 +4,12 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import Container from '@/components/ui/Container'
 import { CloseIcon, MenuIcon } from '@/components/ui/Icon'
 import cn from '@/lib/cn'
-import { SITE } from '@/lib/site'
 
 /**
  * A floating WHITE CARD, sharp-cornered, sitting over the page rather than
- * spanning it. Logo left, links centre, an outlined secondary and a lime
- * primary right. It never turns translucent and never blurs — over a
- * photographic hero it stays a solid white block.
+ * spanning it. Logo left, links centre, the lime primary right. It never turns
+ * translucent and never blurs — over a photographic hero it stays a solid white
+ * block.
  */
 
 const NAV_ITEMS = [
@@ -119,19 +118,10 @@ export default function Header() {
             <div className="flex shrink-0 items-center gap-3">
               <Link
                 to="/contact"
-                className="hidden h-11 items-center justify-center border border-lime bg-white px-5 text-label font-medium uppercase tracking-eyebrow text-ink transition-colors duration-200 hover:bg-lime sm:inline-flex"
-              >
-                Contact
-              </Link>
-
-              <a
-                href={SITE.appStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="hidden h-11 items-center justify-center border border-lime bg-lime px-5 text-label font-medium uppercase tracking-eyebrow text-ink transition-colors duration-200 hover:border-lime-deep hover:bg-lime-deep sm:inline-flex"
               >
-                Get the app
-              </a>
+                Get in touch
+              </Link>
 
               <button
                 ref={toggleRef}
@@ -176,18 +166,10 @@ export default function Header() {
                 <Link
                   to="/contact"
                   onClick={() => setOpen(false)}
-                  className="inline-flex h-12 w-full items-center justify-center border border-ink bg-white text-label font-medium uppercase tracking-eyebrow text-ink"
-                >
-                  Contact
-                </Link>
-                <a
-                  href={SITE.appStoreUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="inline-flex h-12 w-full items-center justify-center border border-lime bg-lime text-label font-medium uppercase tracking-eyebrow text-ink"
                 >
-                  Get the app
-                </a>
+                  Get in touch
+                </Link>
               </div>
             </div>
           ) : null}

@@ -167,18 +167,11 @@ const SECTIONS: readonly PolicySection[] = [
     id: 'third-party-services',
     title: 'Third-Party Services',
     body: (
-      <>
-        <P>
-          Manaber does not send your audio, your transcripts or your inputs to any
-          third-party service. Translation is not outsourced to a remote API — it
-          happens on the device.
-        </P>
-        <P>
-          Manaber is distributed through the Apple App Store and Google Play. Those
-          stores handle the download itself under their own policies, which are set
-          by Apple and Google rather than by us.
-        </P>
-      </>
+      <P>
+        Manaber does not send your audio, your transcripts or your inputs to any
+        third-party service. Translation is not outsourced to a remote API — it
+        happens on the device.
+      </P>
     ),
   },
   {

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 
 import Container from '@/components/ui/Container'
-import { SITE } from '@/lib/site'
 
 /**
  * Dark full-bleed photographic hero.
@@ -50,14 +49,12 @@ export default function Hero() {
             </p>
 
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a
-                href={SITE.appStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/contact"
                 className="inline-flex h-14 items-center justify-center border border-lime bg-lime px-8 text-label-lg font-medium uppercase tracking-eyebrow text-ink transition-colors duration-200 hover:border-lime-deep hover:bg-lime-deep"
               >
-                Get the app
-              </a>
+                Get in touch
+              </Link>
               <Link
                 to="/features"
                 className="inline-flex h-14 items-center justify-center border border-white bg-transparent px-8 text-label-lg font-medium uppercase tracking-eyebrow text-white transition-colors duration-200 hover:border-lime hover:bg-lime hover:text-ink"

@@ -1,12 +1,12 @@
+import Button from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import StoreButtons from '@/components/ui/StoreButtons'
 import { SITE } from '@/lib/site'
 
 /**
  * Split CTA. Left: the closing serif line. Right: a flat lime panel carrying
- * the real store links and the real contact address. No embedded form widget —
- * the contact page owns that.
+ * the route to the contact page and the real contact address. No embedded form
+ * widget — the contact page owns that.
  */
 export default function SplitCta() {
   return (
@@ -21,22 +21,25 @@ export default function SplitCta() {
               Remove the language barrier from the room.
             </h2>
             <p className="mt-8 max-w-[38ch] text-xl leading-relaxed text-ink/70">
-              Free to download on iOS and Android. Nothing to configure, nothing
-              to connect, and nothing collected about the people listening.
+              Nothing to configure, nothing to connect, and nothing collected
+              about the people listening. Every word is translated on the device
+              itself.
             </p>
           </div>
 
           <div className="reveal reveal-delay-1 col-span-12 lg:col-span-6 lg:col-start-7">
             <div className="bg-lime p-8 sm:p-10">
               <h3 className="font-display text-display-md font-normal text-ink">
-                Get Manaber
+                Talk to us
               </h3>
               <p className="mt-5 max-w-prose text-lg font-bold leading-snug text-ink">
-                Download the app, or talk to us about bringing live translation to
-                your mosque, venue or team.
+                Tell us about your mosque, venue or team, and we will show you what
+                live on-device translation looks like in your room.
               </p>
 
-              <StoreButtons tone="black" className="mt-8" />
+              <Button as="link" to="/contact" variant="black" size="lg" className="mt-8">
+                Get in touch
+              </Button>
 
               <div className="mt-8 h-px w-full bg-ink/20" />
 

@@ -31,7 +31,7 @@ const ITEMS: FaqItem[] = [
   {
     question: 'Do I need an account to use Manaber?',
     answer:
-      'No. Manaber works without an account and is free to download on both iOS and Android. There is no sign-up step between you and the first translated sentence.',
+      'No. Manaber works without an account, and there is no sign-up step between you and the first translated sentence.',
   },
   {
     question: 'Can I use Manaber without a connection?',

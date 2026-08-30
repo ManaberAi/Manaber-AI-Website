@@ -202,27 +202,6 @@ export function PhoneIcon(props: IconProps) {
   )
 }
 
-/** Apple logo — inline, filled, drawn from scratch. */
-export function AppleGlyph(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" {...props}>
-      <path d="M16.4 12.6c0-2.2 1.8-3.3 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.7 2.2 1.1 0 1.5-.7 2.8-.7 1.3 0 1.6.7 2.8.7 1.2 0 1.9-1 2.6-2a9 9 0 0 0 1.2-2.4c-.1 0-2.3-.9-2.3-3.5ZM14.2 6.2c.6-.7 1-1.7.9-2.7-.9 0-2 .6-2.6 1.3-.6.6-1.1 1.7-.9 2.6 1 .1 2-.5 2.6-1.2Z" />
-    </svg>
-  )
-}
-
-/** Google Play triangle — inline, filled. */
-export function PlayGlyph(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" {...props}>
-      <path d="M3.6 2.5a1 1 0 0 0-.5.9v17.2a1 1 0 0 0 .5.9l9.2-9.5-9.2-9.5Z" opacity=".95" />
-      <path d="m15.5 9.1-2.7 2.9 2.7 2.9 3.5-1.9c.9-.5.9-1.9 0-2.4l-3.5-1.5Z" opacity=".75" />
-      <path d="m4.3 2.3 8.5 8.8 2.7-2 -9.9-6.7a1.2 1.2 0 0 0-1.3-.1Z" opacity=".85" />
-      <path d="m4.3 21.7 8.5-8.8 2.7 2-9.9 6.7a1.2 1.2 0 0 1-1.3.1Z" opacity=".65" />
-    </svg>
-  )
-}
-
 /** FAQ toggle. Rotates 45° to become a close cross when the row opens. */
 export function PlusIcon(props: IconProps) {
   return (

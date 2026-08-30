@@ -14,7 +14,6 @@ import {
   ShieldIcon,
 } from '@/components/ui/Icon'
 import Section from '@/components/ui/Section'
-import StoreButtons from '@/components/ui/StoreButtons'
 import useReveal from '@/hooks/useReveal'
 import cn from '@/lib/cn'
 import { SITE } from '@/lib/site'
@@ -231,8 +230,9 @@ const QUESTIONS = [
       'No. Everything is processed on the device itself — audio, transcripts and translations. Nothing is uploaded and nothing is stored about you.',
   },
   {
-    question: 'How much does it cost?',
-    answer: 'Manaber is free to download on iOS and Android.',
+    question: 'Do I need an account?',
+    answer:
+      'No. There is no account to create and no sign-in — Manaber runs on the device itself, so there is nothing to register and nothing held about you.',
   },
 ]
 
@@ -602,14 +602,12 @@ export default function Contact() {
                 <div aria-hidden="true" className="mt-8 h-px w-full bg-white/20" />
 
                 <h3 className="mt-8 font-display text-display-xs font-normal text-white">
-                  Try the app first
+                  What Manaber does
                 </h3>
                 <p className="mt-4 text-lg font-bold leading-snug text-lavender">
-                  Most questions are answered faster by using it — free on iOS and
-                  Android, with no account to create.
+                  It listens to a live talk and renders it, as it happens, into the
+                  language each person in the room reads.
                 </p>
-
-                <StoreButtons tone="lime" className="mt-8" />
 
                 <p className="mt-8 flex items-start gap-3 text-lg leading-relaxed text-lavender">
                   <ShieldIcon aria-hidden="true" className="mt-1 h-6 w-6 shrink-0 text-lime" />

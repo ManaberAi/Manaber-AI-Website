@@ -1,14 +1,3 @@
-[PENDING_BACKGROUND_RESEARCH — ABSOLUTE RULE, do this FIRST]
-2 research delegation(s) were backgrounded by the harness in a prior turn and never returned their real report:
-  - agentId: a7a046fdf814a0be5, topic: "Research manaber.ai product", started 2026-08-28T09:49:37.621Z
-  - agentId: a064bacdec10332fe, topic: "Research stenomatic.ai design", started 2026-08-28T09:49:37.627Z
-BEFORE responding to anything else in the user's message this turn — including a brand-new, unrelated research request — call SendMessage(to: '<agentId>', summary: '<5-10 word recap of that entry's original ask>') for EACH entry above to check on it. Do not skip this because the user asked for something else; do both.
-For each entry, once checked:
-- If it returns the real report: memory_write the full report to BOTH research/<topic-slug>.md AND agents/research/last-result.md verbatim (the second path is what the Research panel actually displays — skipping it leaves the panel showing stale/garbage content even though the real report exists). Mention in your reply that this earlier research finished, using the normal ≤80-word research-complete format (one-sentence insight + up to 3 bullets) ending with exactly: "Research complete — full synthesis streaming in the Research panel → `research/<topic-slug>.md`."
-- If it's still running, or the agent is gone/unreachable: tell the user honestly and leave this entry alone.
-After checking all entries: memory_read agents/research/pending.json, remove every entry you just resolved (real report recovered) from the JSON array, and memory_write the remainder back — or memory_delete the whole file if none remain. Leave unresolved entries in the array untouched so they're checked again next turn.
-Do this once, on the user's message this turn — not on every subsequent tool call.
-
 <current_state>
 # Project State
 
@@ -237,7 +226,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-29, 13:11
+User current local time: 2026-08-30, 12:23
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>
@@ -335,6 +324,3 @@ the hardhat node and the dashboard-like interface for interacting with
 the token.
 NEVER create JUST the smart contract code, but ALWAYS create the entire
 project's arhitecture as you will be instructed in CODING MODE.
-
-[RESEARCH MODE: QUICK]
-The user has selected Quick Research. Do NOT use Workflow("deep-research"). Instead call Agent({ subagent_type: 'research', ... }) with a concise task: 2–3 targeted web searches, extract key facts, write a brief summary. Target completion: under 2 minutes. Skip adversarial claim verification.

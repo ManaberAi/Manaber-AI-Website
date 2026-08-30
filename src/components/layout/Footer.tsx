@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
+import Button from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
-import StoreButtons from '@/components/ui/StoreButtons'
 import { SITE } from '@/lib/site'
 
 /** Black ground, four link columns, hairline rule, then the wordmark row. */
@@ -82,11 +82,19 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-4">
-            <ColumnHeading>Get the app</ColumnHeading>
+            <ColumnHeading>Get in touch</ColumnHeading>
             <p className="mt-6 max-w-sm text-[1.0625rem] leading-relaxed text-white/65">
               {SITE.tagline}
             </p>
-            <StoreButtons tone="outline-light" className="mt-6" />
+            <Button
+              as="link"
+              to="/contact"
+              variant="outline-light"
+              size="lg"
+              className="mt-6"
+            >
+              Get in touch
+            </Button>
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import Container from '@/components/ui/Container'
 import Eyebrow from '@/components/ui/Eyebrow'
@@ -18,7 +19,6 @@ import {
   WaveformIcon,
 } from '@/components/ui/Icon'
 import Section from '@/components/ui/Section'
-import StoreButtons from '@/components/ui/StoreButtons'
 import useReveal from '@/hooks/useReveal'
 import cn from '@/lib/cn'
 import { LANGUAGES } from '@/lib/site'
@@ -452,7 +452,9 @@ export default function Features() {
 
               <p className="mt-7 flex items-start gap-2.5 text-base text-neutral-500">
                 <ShieldIcon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
-                <span>Free on iOS and Android. Nothing is ever uploaded.</span>
+                <span>
+                  Processed on the device itself. Nothing is ever uploaded.
+                </span>
               </p>
             </div>
           </div>
@@ -650,7 +652,7 @@ export default function Features() {
         <Container className="relative">
           <div className="reveal mx-auto max-w-3xl py-8 text-center sm:py-12">
             <Eyebrow tone="light" className="justify-center">
-              Download Manaber
+              Talk to us
             </Eyebrow>
             <h2
               id="features-cta-heading"
@@ -659,13 +661,12 @@ export default function Features() {
               Bring it to your next gathering.
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-neutral-400">
-              Free to download on iOS and Android. No account, no upload, nothing
-              collected.
+              Every word is translated on the device in the room. No account, no
+              upload, nothing collected.
             </p>
-            <StoreButtons
-              tone="light"
-              className="mt-9 items-center justify-center sm:flex-row"
-            />
+            <Button as="link" to="/contact" variant="white" size="lg" className="mt-9">
+              Get in touch
+            </Button>
           </div>
         </Container>
       </Section>
