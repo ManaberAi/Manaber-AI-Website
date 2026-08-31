@@ -74,9 +74,17 @@ icon-chip sizing unified · Header drawer now closes before the new route paints
   foreign to the built palette (lime #C8FC00 / indigo #2E0A78 / periwinkle
   #8587FF / black). The mark was placed faithfully rather than re-toned; the
   site has NOT been re-themed to the brand green. Decide before deploy.
-- The full lockup's stacked wordmark is illegible below ~190px tall, which is
-  why the header/footer pair the glyph with the typographic "Manaber" rather
-  than dropping the lockup in. Do not "fix" this by swapping in the lockup.
+- **User decision (2026-08-31): use the lockup WHOLE.** I first paired the
+  isolated glyph with the site's typographic "Manaber" because the lockup's
+  own stacked wordmark is illegible below ~190px tall; user overrode that —
+  "use the logo as it isss". Header + Footer now render
+  `manaber-logo.png` / `manaber-logo-light.png` entire, no substituted type.
+  Header nav grew 4.25rem → 5rem so the lockup can sit at 56px (footer 80px);
+  still clears the `scroll-mt-28` anchor offset. The Arabic and Latin lines
+  inside the lockup ARE small at that scale — this is intended, do not
+  "fix" it by splitting the lockup again.
+- `manaber-mark.png` / `manaber-mark-light.png` (glyph only) are now unused
+  but kept — they are what the favicon is built from.
 
 ## Content discipline held throughout
 No testimonials, client logos, case studies, awards, certifications, pricing,
@@ -356,7 +364,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-31, 11:39
+User current local time: 2026-08-31, 11:47
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>
