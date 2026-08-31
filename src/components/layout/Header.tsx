@@ -34,20 +34,19 @@ const NAV_TRAILING = [
 
 function Wordmark({ className }: { className?: string }) {
   return (
-    <span className={cn('flex items-center gap-2.5', className)}>
-      {/* The real Manaber minaret mark, isolated from the supplied lockup.
-          The lockup's own stacked wordmark is unreadable below ~190px tall, so
-          the header pairs the mark with the site's typographic "Manaber"
-          instead. `/manaber-logo.png` holds the full lockup for large use. */}
+    <span className={cn('flex items-center', className)}>
+      {/* The supplied Manaber lockup, used whole — minaret, Arabic, Latin and
+          rule together. Nothing is substituted or re-set in site type. The bar
+          is 5rem tall so the lockup can sit at 56px and still breathe; the
+          accessible name comes from the parent Link's aria-label. */}
       <img
-        src="/manaber-mark.png"
+        src="/manaber-logo.png"
         alt=""
         aria-hidden="true"
-        width={435}
-        height={574}
-        className="h-9 w-auto"
+        width={816}
+        height={696}
+        className="h-14 w-auto"
       />
-      <span className="text-[1.3125rem] font-bold tracking-tight text-ink">Manaber</span>
     </span>
   )
 }
@@ -101,7 +100,7 @@ export default function Header() {
         <div className="relative bg-white shadow-lift ring-1 ring-ink/10">
           <nav
             aria-label="Primary"
-            className="flex h-[4.25rem] items-center justify-between gap-6 px-5 sm:px-6"
+            className="flex h-20 items-center justify-between gap-6 px-5 sm:px-6"
           >
             <Link
               to="/"

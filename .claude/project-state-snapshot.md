@@ -60,8 +60,23 @@ icon-chip sizing unified · Header drawer now closes before the new route paints
   was not verifiable. Needs replacing with the actual listing.
 - Contact form is `mailto:` only and says so honestly. Real lead capture =
   provision Postgres on Coolify (`biela-ent-21`) — separate explicit step.
-- Existing logo not used; brand wordmark is typographic. Their real icon is at
-  `manaber.ai/wp-content/uploads/2025/08/icon-192x192-1-scaled.png`.
+- **Real logo now in use (2026-08-31).** User supplied `Manaber Logo Color.jpg`
+  + `Manaber Logo Reverse Color.jpg`. Brand green is **#146851**. Backgrounds
+  were keyed out losslessly (flat 2-colour art) and the minaret glyph isolated
+  by connected-component labelling into `public/`:
+  `manaber-mark.png` / `manaber-mark-light.png` (glyph only, used in
+  Header + Footer at h-9), `manaber-logo.png` / `manaber-logo-light.png`
+  (full lockup, currently unreferenced — for large/OG use only),
+  `favicon.png` (512, white glyph on #146851) + `apple-touch-icon.png` (180).
+  Old synthetic square-with-notch glyph deleted from Header + Footer;
+  `favicon.svg` now orphaned.
+- **PALETTE CONFLICT — unresolved, user's call.** The logo's #146851 green is
+  foreign to the built palette (lime #C8FC00 / indigo #2E0A78 / periwinkle
+  #8587FF / black). The mark was placed faithfully rather than re-toned; the
+  site has NOT been re-themed to the brand green. Decide before deploy.
+- The full lockup's stacked wordmark is illegible below ~190px tall, which is
+  why the header/footer pair the glyph with the typographic "Manaber" rather
+  than dropping the lockup in. Do not "fix" this by swapping in the lockup.
 
 ## Content discipline held throughout
 No testimonials, client logos, case studies, awards, certifications, pricing,
@@ -341,7 +356,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-31, 11:34
+User current local time: 2026-08-31, 11:39
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>

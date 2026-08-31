@@ -117,16 +117,13 @@ export default function Footer() {
         <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <Link to="/" aria-label="Manaber — home" className="inline-flex items-center gap-2.5">
             <img
-              src="/manaber-mark-light.png"
+              src="/manaber-logo-light.png"
               alt=""
               aria-hidden="true"
-              width={435}
-              height={574}
-              className="h-9 w-auto"
+              width={816}
+              height={696}
+              className="h-20 w-auto"
             />
-            <span className="text-[1.3125rem] font-bold tracking-tight text-white">
-              Manaber
-            </span>
           </Link>
 
           <div className="flex flex-col gap-1 text-[1.0625rem] text-white/50 sm:flex-row sm:gap-6">
