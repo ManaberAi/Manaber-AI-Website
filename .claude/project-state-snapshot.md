@@ -50,6 +50,26 @@ icon-chip sizing unified · Header drawer now closes before the new route paints
    so `aria-current` no longer sticks to a section the reader has left.
 3. `Contact.tsx` — focus moves to the confirmation heading on submit.
 
+## Interior-page re-band (2026-08-31)
+User: "feature and other pages look like no interest with only one color."
+Root cause was NOT just colour — `Features.tsx` and `UseCases.tsx` had never
+been migrated off the emerald design system (42+32 `emerald-*`, 27+18
+`rounded-*`, `neutral-*`, legacy `tone="tint"/"dark"` aliases), and Features
+held all 7 capabilities inside ONE lavender slab. Both also ended on a black
+slab directly above the black footer — a §5.1 contract violation.
+Two design agents run in parallel, one file each, slab sequence dictated by me:
+- **Features:** white → periwinkle → white → lavender → black → white → indigo
+  (7 capabilities split across bands 2/3/4; L·R alternation runs unbroken via a
+  `CapabilityRow` keyed on a global index)
+- **Use Cases:** white → periwinkle → white → lavender → white → indigo →
+  white → lime
+Verified by me: build + lint clean; emerald/rounded/neutral/legacy-alias counts
+all 0 on both; the 4 AI image URLs in UseCases diff byte-identical to HEAD.
+Agents also added the §4 BubbleCard motif (both pages had none) and raised
+type to the display scale — contract-required, beyond the literal brief.
+Contact/Privacy/SolutionDetail were already clean and were NOT touched.
+NOT yet pushed to GitHub.
+
 ## Open Items / Risks
 - **Discovery answers were auto-submitted defaults, never actively confirmed**
   (fidelity, page scope, no-backend). Re-confirm before deploy or spend.
@@ -364,7 +384,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-31, 11:47
+User current local time: 2026-08-31, 12:04
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>
@@ -462,6 +482,3 @@ the hardhat node and the dashboard-like interface for interacting with
 the token.
 NEVER create JUST the smart contract code, but ALWAYS create the entire
 project's arhitecture as you will be instructed in CODING MODE.
-
-[RESEARCH MODE: QUICK]
-The user has selected Quick Research. Do NOT use Workflow("deep-research"). Instead call Agent({ subagent_type: 'research', ... }) with a concise task: 2–3 targeted web searches, extract key facts, write a brief summary. Target completion: under 2 minutes. Skip adversarial claim verification.
