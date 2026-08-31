@@ -98,25 +98,41 @@ Looks like a fine-grained PAT with no ManaberAi resource-owner grant.
 Retry is one `github_push` call once the token has write on that repo.
 No Netlify token available, no netlify CLI installed.
 
-### Correction — the untracking fix was wrong, and my replacement fix regressed
-User flagged that untracking `.claude/` (13 platform prompt files) was too broad
-a response to a scanner hit on placeholder strings. Correct call — reverted via
-`git reset --hard e943642`. All 16 `.claude` files tracked again, `.gitignore`
-back to just the zip entry, nothing lost on disk.
+### Scanner blocker — RESOLVED (verified, not guessed)
+Two wrong attempts first, both reverted, nothing lost:
+1. Untracked `.claude/` wholesale (85ceb56) — user flagged it as far too broad
+   for a two-line problem. Reverted.
+2. Bracketed the Postgres placeholders (6a92233) — made it WORSE, 1 match/file
+   → 3. Reverted. Root cause of the regression: secretlint's
+   database-connection-string rule ALLOWLISTS obvious dummy words, so
+   `postgresql://user:password@host` was never flagged; `<user>:<password>`
+   defeated the allowlist and created new matches.
 
-I then edited the flagged placeholders instead (commit 6a92233): bracketed
-`postgresql://user:password@host:5432/dbname` → `<user>:<password>@<host>` and
-the Neon example likewise, in `coding.md` + `coding-lite.md`.
-**This made the scanner WORSE: 1 match per file → 3 matches per file.**
-Bracketing did not neutralize the pattern. Commit 6a92233 is still applied and
-should probably be reverted too. Do NOT iterate further against the scanner
-without deciding the approach first.
+Actual match, found by running the rule locally instead of guessing:
+`npx @secretlint/quick-start .claude/agents/coding.md` →
+line 642, `[MongoDBConnection]` on
+`MONGODB_URI=mongodb://dev:<RANDOM_HEX_24>@localhost:27017/app?authSource=admin`
+Fix (commit 2ed6820): switched to `${MONGO_PASSWORD}` interpolation, mirroring
+the PostgreSQL block directly above it. Docs unchanged in meaning.
+Verified `secretlint` exit 0 on both files. Push now clears the scanner.
+LESSON: run the scanner locally to identify the literal — never guess it.
+
+### REMAINING BLOCKER — 403, GitHub write access (unresolved)
+`git push github master` → `remote: Write access to repository not granted` (403).
+Persists with the NEW token connected 2026-08-31 (classic `repo` scope requested).
+Token authenticates as user `Sumair10`; repo is owned by org `ManaberAi`.
+So the token is valid but that account lacks write on that specific repo.
+Likely one of: Sumair10 not a collaborator/member with write · org enforces SAML
+SSO and the token was never authorized · fine-grained token with no org grant.
+User's own link was .../settings/access — the collaborator page.
+
+⚠️ SECURITY: on 2026-08-31 the user pasted a raw PAT (`github_pat_11AM6FVK…`)
+directly into chat. It was NOT used. User was told to revoke and rotate it, and
+reconnected via the secure dialog. Confirm the old one was actually deleted.
+Never accept a credential as chat text — use `github_request_connection`.
 
 STATE RIGHT NOW: nothing pushed, nothing deployed. Remote `github` wired.
-Two independent blockers stand: (1) secret scanner on `.claude/agents/*.md`,
-(2) 403 no write access for the Sumair10 PAT on the ManaberAi org repo.
-Blocker (2) is fatal on its own — solving (1) alone still won't push.
-Both discovery answers this turn were countdown AUTO-SUBMITS — not user decisions.
+Scanner clear. The 403 is the only thing standing between here and a push.
 
 ## Next Steps (none in flight — awaiting user)
 - User picks a publish path: widen PAT scope → I create+push repo; OR supply a
@@ -281,7 +297,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-31, 10:15
+User current local time: 2026-08-31, 10:21
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>
