@@ -116,16 +116,14 @@ export default function Footer() {
 
         <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <Link to="/" aria-label="Manaber — home" className="inline-flex items-center gap-2.5">
-            <span
+            <img
+              src="/manaber-mark-light.png"
+              alt=""
               aria-hidden="true"
-              className="relative inline-flex h-7 w-7 items-center justify-center bg-white"
-            >
-              <span
-                className="absolute left-0 top-full h-2.5 w-2.5 bg-white"
-                style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}
-              />
-              <span className="h-2 w-2 bg-indigo" />
-            </span>
+              width={435}
+              height={574}
+              className="h-9 w-auto"
+            />
             <span className="text-[1.3125rem] font-bold tracking-tight text-white">
               Manaber
             </span>

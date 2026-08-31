@@ -35,18 +35,18 @@ const NAV_TRAILING = [
 function Wordmark({ className }: { className?: string }) {
   return (
     <span className={cn('flex items-center gap-2.5', className)}>
-      {/* Sharp black glyph with the tail notch cut out of it — the motif,
-          shrunk to logo scale. */}
-      <span
+      {/* The real Manaber minaret mark, isolated from the supplied lockup.
+          The lockup's own stacked wordmark is unreadable below ~190px tall, so
+          the header pairs the mark with the site's typographic "Manaber"
+          instead. `/manaber-logo.png` holds the full lockup for large use. */}
+      <img
+        src="/manaber-mark.png"
+        alt=""
         aria-hidden="true"
-        className="relative inline-flex h-7 w-7 items-center justify-center bg-ink"
-      >
-        <span
-          className="absolute left-0 top-full h-2.5 w-2.5 bg-ink"
-          style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}
-        />
-        <span className="h-2 w-2 bg-lime" />
-      </span>
+        width={435}
+        height={574}
+        className="h-9 w-auto"
+      />
       <span className="text-[1.3125rem] font-bold tracking-tight text-ink">Manaber</span>
     </span>
   )
