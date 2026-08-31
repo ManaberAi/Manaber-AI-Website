@@ -143,8 +143,25 @@ directly into chat. It was NOT used. User was told to revoke and rotate it, and
 reconnected via the secure dialog. Confirm the old one was actually deleted.
 Never accept a credential as chat text — use `github_request_connection`.
 
-STATE RIGHT NOW: nothing pushed, nothing deployed. Remote `github` wired.
-Scanner clear. The 403 is the only thing standing between here and a push.
+### Scanner — CLEARED for good (2026-08-31, commit 90ce456)
+User chose the narrow option: untrack `.claude/agents/` ONLY (13 regenerating
+templates). `coach-lessons-snapshot.md`, `project-state-snapshot.md` and
+`skills/coach-lessons/SKILL.md` stay tracked. Files remain on disk.
+Verified: secretlint over all 53 tracked files → exit 0, zero findings.
+A push now reaches GitHub instead of being blocked locally.
+
+### Token was revoked — needs reconnecting (current blocker)
+Push reached the remote and returned `Invalid username or token`, and
+`github_status` now returns connected:false "GitHub rejected it (invalid or
+expired)". Earlier failures were 403 (valid token, no write access); this is
+401-class. Inference: the token connected via the dialog was the SAME one the
+user had pasted into chat, so revoking it invalidated the stored connection.
+`github_request_connection` dialog reopened for a freshly generated token.
+
+STATE RIGHT NOW: nothing pushed, nothing deployed. Remote `github` wired,
+scanner clear, everything committed at 90ce456. Two unknowns remain, in order:
+(1) a valid token must be connected, (2) the 403 write-access question is
+STILL untested — it may or may not have been fixed by the user's grant.
 
 ## Next Steps (none in flight — awaiting user)
 - User picks a publish path: widen PAT scope → I create+push repo; OR supply a
@@ -309,7 +326,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-31, 10:27
+User current local time: 2026-08-31, 10:30
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>
