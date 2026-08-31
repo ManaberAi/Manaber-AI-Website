@@ -638,8 +638,9 @@ These are the failures the coach has flagged most often across past projects. Sk
       DATABASE_URL=postgresql://dev:${POSTGRES_PASSWORD}@localhost:5432/app
       ```
       ```
-      # MongoDB
-      MONGODB_URI=mongodb://dev:<RANDOM_HEX_24>@localhost:27017/app?authSource=admin
+      # MongoDB — generate a strong password: openssl rand -hex 24
+      MONGO_PASSWORD=<run: openssl rand -hex 24>
+      MONGODB_URI=mongodb://dev:${MONGO_PASSWORD}@localhost:27017/app?authSource=admin
       ```
 
    c. `.env.example` — same keys with placeholders + a one-line comment explaining where the production value comes from. This file IS committed; `.env` is NOT (add `.env` to `.gitignore`).
