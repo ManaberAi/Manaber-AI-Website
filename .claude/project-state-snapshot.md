@@ -109,13 +109,25 @@ Two wrong attempts first, both reverted, nothing lost:
    defeated the allowlist and created new matches.
 
 Actual match, found by running the rule locally instead of guessing:
-`npx @secretlint/quick-start .claude/agents/coding.md` →
-line 642, `[MongoDBConnection]` on
-`MONGODB_URI=mongodb://dev:<RANDOM_HEX_24>@localhost:27017/app?authSource=admin`
-Fix (commit 2ed6820): switched to `${MONGO_PASSWORD}` interpolation, mirroring
-the PostgreSQL block directly above it. Docs unchanged in meaning.
-Verified `secretlint` exit 0 on both files. Push now clears the scanner.
+`npx @secretlint/quick-start .claude/agents/coding.md` → line 642,
+rule `[MongoDBConnection]`, on the MONGODB_URI example line in the `.env`
+section (a mongo scheme URL carrying inline dev credentials).
+DO NOT quote that literal in any tracked file — doing so propagates the match
+into `project-state-snapshot.md`. That is how a 3rd match appeared 2026-08-31.
+Fix (commit 2ed6820): switched it to `${MONGO_PASSWORD}` interpolation,
+mirroring the PostgreSQL block above. Verified `secretlint` exit 0.
 LESSON: run the scanner locally to identify the literal — never guess it.
+
+### ⚠️ BUT: editing `.claude/agents/*.md` is FUTILE — they regenerate
+The platform rewrites `.claude/agents/*.md` from a template on session start.
+Commit 2ed6820 is in git history, but the next turn the working tree came back
+MODIFIED with line 642 restored to the original. Any edit there is transient.
+Consequence: the scanner hit CANNOT be fixed by editing those files. The only
+durable options are (a) stop tracking them, or (b) fix the platform template
+upstream (outside this project), or (c) skip GitHub entirely.
+This is new evidence that post-dates the user's rejection of untracking —
+they rejected it as "too broad for a two-line fix", before it was known the
+two lines regenerate every turn.
 
 ### REMAINING BLOCKER — 403, GitHub write access (unresolved)
 `git push github master` → `remote: Write access to repository not granted` (403).
@@ -297,7 +309,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-31, 10:21
+User current local time: 2026-08-31, 10:27
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>

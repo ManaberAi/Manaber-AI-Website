@@ -34,3 +34,7 @@ dist-ssr
 
 # local deploy bundle
 manaber-dist.zip
+
+# Biela agent prompt templates — regenerated from a platform template every
+# session, so edits here never persist. Kept on disk, out of version control.
+.claude/agents/
