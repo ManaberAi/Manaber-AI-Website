@@ -69,6 +69,13 @@ team bios, response-time promises, latency or accuracy figures. Only the three
 real stats (5.0★ · 1,000+ ratings · +70% engagement). Stenomatic's copy and
 palette were not reused. Privacy policy claims no compliance framework.
 
+## Uncommitted work — HELD by user decision (2026-08-30)
+Solution pages + mega-menu landed on disk before the escalation reached the
+user. User's answer: **hold as-is, no further work.** So: not committed, not
+reviewed, not reverted, not deployed. Left exactly as the agent wrote it in
+the working tree (`src/lib/solutions.ts` modified, `.biela/` untracked).
+Do NOT commit, sweep, or continue this work without an explicit new request.
+
 ## Next Steps (none in flight — awaiting user)
 - Verify the two open content items above
 - Optional: deploy to Coolify (`biela-ent-21`) on explicit request
@@ -230,7 +237,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-31, 00:00
+User current local time: 2026-08-31, 09:43
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>
