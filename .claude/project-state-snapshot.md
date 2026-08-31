@@ -384,7 +384,7 @@ The following work has ALREADY shipped on this project (most recent first). Befo
 
 <user_context>
 User timezone (IANA): Asia/Dubai
-User current local time: 2026-08-31, 12:04
+User current local time: 2026-08-31, 12:05
 
 When the user gives a time without a zone ("9am", "tonight", "tomorrow at 14:00"), interpret it in this timezone. When calling schedule_create with a cron trigger, ALWAYS pass scheduleTz="Asia/Dubai" unless the user explicitly names a different zone.
 </user_context>
@@ -482,3 +482,6 @@ the hardhat node and the dashboard-like interface for interacting with
 the token.
 NEVER create JUST the smart contract code, but ALWAYS create the entire
 project's arhitecture as you will be instructed in CODING MODE.
+
+[RESEARCH MODE: QUICK]
+The user has selected Quick Research. Do NOT use Workflow("deep-research"). Instead call Agent({ subagent_type: 'research', ... }) with a concise task: 2–3 targeted web searches, extract key facts, write a brief summary. Target completion: under 2 minutes. Skip adversarial claim verification.
