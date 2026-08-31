@@ -31,3 +31,6 @@ dist-ssr
 /.biela/*
 !/.biela/ports.mjs
 !/.biela/ports.d.mts
+
+# local deploy bundle
+manaber-dist.zip
